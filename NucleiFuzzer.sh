@@ -50,7 +50,7 @@ check_prerequisite() {
 }
 
 check_prerequisite "nuclei" "go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest"
-check_prerequisite "httpx" "go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest"
+check_prerequisite "httpx-toolkit"
 check_prerequisite "uro" "pip3 install uro"
 check_prerequisite "katana" "go install -v github.com/projectdiscovery/katana/cmd/katana@latest"
 check_prerequisite "waybackurls" "go install github.com/tomnomnom/waybackurls@latest"
@@ -187,7 +187,7 @@ run_nuclei() {
     local url_file=$1
 
     echo -e "${GREEN}Running Nuclei on URLs from $url_file...${RESET}"
-    httpx -silent -mc 200,204,301,302,401,403,405,500,502,503,504 -l "$url_file" \
+    httpx-toolkit -silent -mc 200,204,301,302,401,403,405,500,502,503,504 -l "$url_file" \
         | nuclei -t "$home_dir/nuclei-templates" -dast -rl 50 -o "$output_folder/nuclei_results.txt"
 }
 
